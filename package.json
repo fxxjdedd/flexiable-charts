@@ -8,6 +8,7 @@
     "build": "parcel build index.html"
   },
   "dependencies": {
+    "@antv/g2": "4.0.12",
     "@types/echarts": "4.6.3",
     "echarts": "4.8.0",
     "typescript": "3.9.6"
