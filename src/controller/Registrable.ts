@@ -1,11 +1,10 @@
-import { DataService, RenderService } from "../service";
+import {
+  DataService,
+  RenderService,
+  DataServiceCtor,
+  RenderServiceCtor
+} from "../service";
 
-interface RenderServiceCtor {
-  new (): RenderService;
-}
-interface DataServiceCtor {
-  new (): DataService;
-}
 // TODO: DI?
 export abstract class Registrable {
   renderService?: RenderService;

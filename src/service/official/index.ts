@@ -3,7 +3,4 @@ export {
   EChartsRenderProps,
   EChartOption
 } from "./EchartsRenderService";
-export {
-  BIAssociativeDataService,
-  BIDataSource
-} from "./BIAssociativeDataService";
+export { BIAssociativeDataService } from "./BIAssociativeDataService";

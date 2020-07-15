@@ -1,13 +1,13 @@
 import { Controller, Controllable } from "../controller";
 export class BasePlot implements Controllable {
-  ctrl?: Controller;
+  ctrl: Controller;
 
   constructor(chart: Controller) {
     this.ctrl = chart;
   }
 
   async render() {
-    await this.ctrl?.render()
+    await this.ctrl.render();
   }
 
   // updateConfig(config: any) {
@@ -18,7 +18,5 @@ export class BasePlot implements Controllable {
   //   this.ctrl?.changeData(data)
   // }
 
-  destroy() {
-
-  }
+  destroy() {}
 }

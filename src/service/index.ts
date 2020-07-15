@@ -1,2 +1,2 @@
-export { DataService } from "./DataService";
-export { RenderService, RenderProps } from "./RenderService";
+export { DataService, DataServiceCtor } from "./DataService";
+export { RenderService, RenderServiceCtor, RenderProps } from "./RenderService";

@@ -8,3 +8,7 @@ export interface RenderService {
   mount(el: any): any;
   render(renderProps: RenderProps): any;
 }
+
+export interface RenderServiceCtor {
+  new (): RenderService;
+}

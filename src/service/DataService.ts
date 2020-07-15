@@ -16,3 +16,7 @@ export interface DataService {
   fetchData(params: DataSource): Promise<DataStructor>;
   fetchDataByExternalData?(params: ExternalData): Promise<DataStructor>;
 }
+
+export interface DataServiceCtor {
+  new (): DataService;
+}
