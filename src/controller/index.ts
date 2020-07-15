@@ -1,49 +1,60 @@
 import { Registrable } from "./Registrable";
 import { Controllable } from "./Controllable";
+import { DataStructor, DataSourceOrExternalData, DataSource } from "../service/DataService";
 
+function isDataSource(dataSource: any): dataSource is DataSource {
+  return !!dataSource.id;
+}
 export class Controller extends Registrable implements Controllable {
-  data: any;
+  data: DataStructor;
   config: any;
   instance: any;
-  originData: any;
-  metrics: any
   el: any;
-  constructor(el: any, config: any, originDataAndMetrics: any) {
+  params: DataSourceOrExternalData
+  constructor(el: any, config: any, params: DataSourceOrExternalData) {
     super()
     this.el = el
-    this.data = null
+    this.data = {}
     this.config = config;
+    // FIXME: 这里service还没有注册
     this.instance = this.renderService?.mount(el)
-    this.originData = originDataAndMetrics.data
-    this.metrics = originDataAndMetrics.metrics
+    this.params = params
   }
   doRender(data: any, config: any) {
-    this.renderService?.render({
+    if (!this.renderService) {
+      throw new Error("RenderService not registered!")
+    }
+    this.renderService.render({
       instance: this.instance,
       data,
       config
     })
   }
   async fetchData() {
-    // 把config处理成对应的接口参数结构
-    if (this.metrics) {
-      this.data = await this.dataService!.fetchData(this.originData, this.metrics);
-    } else {
-      this.data = await this.dataService!.fetchData(this.config.dataSource);      
+    if (!this.dataService) {
+      throw new Error("DataService not registered!")
     }
+    // 把config处理成对应的接口参数结构
+    if (!isDataSource(this.params)) {
+      if (!this.dataService.fetchDataByExternalData) {
+        throw new Error("fetchDataByExternalData not implemented")
+      }
+      return this.dataService.fetchDataByExternalData(this.params)
+    }
+    return this.dataService?.fetchData(this.params)!
   }
   // g2-like apis
   async render() {
-    this.data = await this.fetchData();
+    this.data = this.fetchData();
     this.doRender(this.data, this.config)
   }
-  updateConfig(config: any) {
-    this.doRender(this.data, config)
-  }
-  changeData(data: any) {
-    // TODO: merge data
-    this.doRender(data, this.config)
-  }
+  // updateConfig(config: any) {
+  //   this.doRender(this.data, config)
+  // }
+  // changeData(data: any) {
+  //   // TODO: merge data
+  //   this.doRender(data, this.config)
+  // }
   destroy() {
     // todo
   }

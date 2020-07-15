@@ -10,13 +10,13 @@ export class BasePlot implements Controllable {
     await this.ctrl?.render()
   }
 
-  updateConfig(config: any) {
-    this.ctrl?.updateConfig(config)
-  }
+  // updateConfig(config: any) {
+  //   this.ctrl?.updateConfig(config)
+  // }
 
-  changeData(data: any) {
-    this.ctrl?.changeData(data)
-  }
+  // changeData(data: any) {
+  //   this.ctrl?.changeData(data)
+  // }
 
   destroy() {
 

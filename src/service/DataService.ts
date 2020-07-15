@@ -1,20 +1,18 @@
+export interface DataStructor {}
 export interface DataSource {
   id: number;
   from: string;
 }
 
-export type Data = Array<object>;
-
-export type OriginData = any;
-
-export type Metrics = {
+export type ExternalData = {
+  data: Array<object>;
   dimensions: Array<object>;
   indicators: Array<object>;
 };
 
-export type DataAndMetrics = Data & Metrics;
+export type DataSourceOrExternalData = DataSource | ExternalData;
 
 export interface DataService {
-  fetchData(dataSource: DataSource): Promise<any>;
-  fetchData(originData: OriginData, metrics: Metrics): Promise<any>;
+  fetchData(params: DataSource): Promise<DataStructor>;
+  fetchDataByExternalData?(params: ExternalData): Promise<DataStructor>;
 }
