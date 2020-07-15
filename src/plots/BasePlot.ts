@@ -4,6 +4,7 @@ export class BasePlot implements Controllable {
 
   constructor(chart: Controller) {
     this.ctrl = chart;
+    this.ctrl.instantiation();
   }
 
   async render() {

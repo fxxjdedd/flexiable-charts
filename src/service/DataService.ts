@@ -1,4 +1,6 @@
-export interface DataStructor {}
+export interface DataStructor {
+  source: Array<Array<any>>;
+}
 export interface DataSource {
   id: number;
   from: string;
