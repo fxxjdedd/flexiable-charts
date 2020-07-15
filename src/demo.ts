@@ -1,4 +1,6 @@
-import { Line, G2Line } from "./plots";
+import { Line, G2Line, Table } from "./plots";
+
+// echarts
 const echartsLine = new Line(
   document.getElementById("echarts"),
   {
@@ -14,6 +16,7 @@ const echartsLine = new Line(
 );
 echartsLine.render();
 
+// g2
 const g2Line = new G2Line(
   document.getElementById("g2"),
   {
@@ -27,3 +30,14 @@ const g2Line = new G2Line(
   }
 );
 g2Line.render();
+
+// react
+const reactTable = new Table(
+  document.getElementById("table"),
+  {
+    id: 3,
+    from: ""
+  },
+  {}
+);
+reactTable.render();
