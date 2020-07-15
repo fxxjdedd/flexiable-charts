@@ -1,4 +1,4 @@
-import { Line, G2Line, Table } from "./plots";
+import { Line, G2Line, ReactTable, VueTable } from "./plots";
 
 // echarts
 const echartsLine = new Line(
@@ -32,8 +32,8 @@ const g2Line = new G2Line(
 g2Line.render();
 
 // react
-const reactTable = new Table(
-  document.getElementById("table"),
+const reactTable = new ReactTable(
+  document.getElementById("react-table"),
   {
     id: 3,
     from: ""
@@ -41,3 +41,14 @@ const reactTable = new Table(
   {}
 );
 reactTable.render();
+
+// vue
+const vueTable = new VueTable(
+  document.getElementById("vue-table"),
+  {
+    id: 4,
+    from: ""
+  },
+  {}
+);
+vueTable.render();
