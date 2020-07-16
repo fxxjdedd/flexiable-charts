@@ -52,3 +52,17 @@ const vueTable = new VueTable(
   {}
 );
 vueTable.render();
+
+// custom render
+// const myLine = new Line()
+// myLine.ctrl.registerDataService
+// myLine.ctrl.registerGeneratorService
+// myLine.ctrl.registerRenderService
+
+// custom chart
+// class MyChart extends BasePlot {
+//   constructor() {
+//     // register service
+//   }
+// }
+// const myChart = new MyChart()
