@@ -34,3 +34,9 @@ export function isAllFunction(arr: any[]): arr is Function[] {
 export function assertUnreachable(msg?: string): never {
   throw new Error(msg);
 }
+
+export function assertExist(value: unknown, msg?: string): asserts value {
+  if (value == null || (Array.isArray(value) && !value.length)) {
+    throw new Error(msg);
+  }
+}

@@ -7,7 +7,7 @@ import {
 
 import {GeneratorService} from '../service'
 import {all as deepmerge} from 'deepmerge'
-import { isDataSource, isAllObject, isAllFunction, assertUnreachable, isAllElement } from '../util'
+import { isDataSource, isAllObject, isAllFunction, assertUnreachable, assertExist, isAllElement } from '../util'
 
 function createGenerateResult(generators: GeneratorService[], data: DataStructor, config: any) {
   const generates = generators.map(g => g.generate(data, config))
@@ -54,19 +54,13 @@ export class Controller<T> extends Registrable<T> implements Controllable {
   }
 
   instantiation() {
-    if (!this.renderService) {
-      throw new Error("RenderService not registered!");
-    }
+    assertExist(this.renderService, 'RenderService not registered!')
     this.instance = this.renderService?.mount(this.el, this.config);
   }
 
   doRender(data: any, config: any) {
-    if (!this.renderService) {
-      throw new Error("RenderService not registered!");
-    }
-    if (!this.generatorServices.length) {
-      throw new Error("GeneratorService not registered!")
-    }
+    assertExist(this.renderService, 'RenderService not registered!')
+    assertExist(this.generatorServices, 'GeneratorService not registered!')
 
     const generateResult = createGenerateResult(this.generatorServices, data, config)
 
@@ -77,14 +71,10 @@ export class Controller<T> extends Registrable<T> implements Controllable {
   }
 
   async fetchData() {
-    if (!this.dataService) {
-      throw new Error("DataService not registered!");
-    }
+    assertExist(this.dataService, 'DataService not registered!')
     // 把config处理成对应的接口参数结构
     if (!isDataSource(this.params)) {
-      if (!this.dataService.fetchDataByExternalData) {
-        throw new Error("fetchDataByExternalData not implemented!");
-      }
+      assertExist(this.dataService.fetchDataByExternalData, 'fetchDataByExternalData not implemented!')
       return this.dataService.fetchDataByExternalData(this.params);
     }
     return this.dataService.fetchData(this.params)!;
