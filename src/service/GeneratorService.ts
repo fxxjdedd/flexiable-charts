@@ -1,7 +1,7 @@
-export interface GeneratorService {
-  generate(data: any, config: any): any;
+export interface GeneratorService<T = unknown> {
+  generate(data: any, config: any): T;
 }
 
-export interface GeneratorServiceCtor {
-  new (): GeneratorService;
+export interface GeneratorServiceCtor<T = unknown> {
+  new (): GeneratorService<T>;
 }

@@ -2,8 +2,8 @@ import { Controller, Controllable } from "../controller";
 export class BasePlot implements Controllable {
   ctrl: Controller;
 
-  constructor(chart: Controller) {
-    this.ctrl = chart;
+  constructor(ctrl: Controller) {
+    this.ctrl = ctrl;
     this.ctrl.instantiation();
   }
 

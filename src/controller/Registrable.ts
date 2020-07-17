@@ -1,14 +1,17 @@
 import {
   DataService,
   RenderService,
+  GeneratorService,
   DataServiceCtor,
-  RenderServiceCtor
+  RenderServiceCtor,
+  GeneratorServiceCtor
 } from "../service";
 
 // TODO: DI?
 export abstract class Registrable {
   renderService?: RenderService;
   dataService?: DataService;
+  generatorServices: Array<GeneratorService> = [];
 
   registerRenderService(Class: RenderServiceCtor) {
     // TODO: 实例化的时候需要注入一些方便用户使用的实例
@@ -18,6 +21,9 @@ export abstract class Registrable {
     // TODO: 实例化的时候需要注入一些方便用户使用的实例
     this.dataService = new Class();
   }
+  registerGeneratorService(Class: GeneratorServiceCtor) {
+    this.generatorServices.push(new Class());
+  }
 
   static globalRegisterRenderService(Class: RenderServiceCtor) {
     Registrable.prototype.renderService = new Class();
@@ -26,4 +32,6 @@ export abstract class Registrable {
   static globalRegisterDataService(Class: DataServiceCtor) {
     Registrable.prototype.dataService = new Class();
   }
+
+  static globalRegisterGeneratorService(Class: GeneratorServiceCtor) {}
 }
