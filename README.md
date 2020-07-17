@@ -4,7 +4,7 @@ Created with CodeSandbox
 
 # todos
 
-- [] 全局注册，局部注册，全局兼容性注册（既要大规模应用插件，也要保证兼容性）
+- [x] 全局注册，局部注册，全局兼容性注册（既要大规模应用插件，也要保证兼容性）
 - [x] generator service 注册多个？
 - [x] generator service 注册校验？
 - [] generator 还是不够抽象
@@ -14,6 +14,7 @@ Created with CodeSandbox
 
 ```ts
 import { Line, G2Line, ReactTable, VueTable } from "./plots";
+import "./demos/registerGeneratorServiceDemo";
 
 // echarts
 const echartsLine = new Line(
@@ -68,17 +69,5 @@ const vueTable = new VueTable(
 );
 vueTable.render();
 
-// custom render 伪代码
-const myLine = new Line();
-myLine.ctrl.registerDataService;
-myLine.ctrl.registerGeneratorService;
-myLine.ctrl.registerRenderService;
-
-// custom chart 伪代码
-class MyChart extends BasePlot {
-  constructor() {
-    // register service
-  }
-}
-const myChart = new MyChart();
+// custom render seed ./demos
 ```

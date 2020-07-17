@@ -54,4 +54,4 @@ const vueTable = new VueTable(
 );
 vueTable.render();
 
-// custom render 见 ./demos
+// custom render seed ./demos
