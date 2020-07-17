@@ -1,12 +1,12 @@
 import { Line } from "../plots/line";
 import { Registrable } from "../controller/Registrable";
-import { GeneratorService } from "../service";
+import { GeneratorService, DataStructor } from "../service";
 import { EChartOption, EChartsRenderService } from "../service/core-service";
 
 class globalEChartsGeneratorService implements GeneratorService {
   // 这意味着，globalEChartsGeneratorService只对EChartsRenderService生效
   renderTargets = [EChartsRenderService];
-  generate(data, config: EChartOption) {
+  generate(data: DataStructor, config: EChartOption) {
     config.title = {
       textStyle: {
         color: "red"
@@ -19,7 +19,7 @@ class globalEChartsGeneratorService implements GeneratorService {
 
 class TitleTextEChartsGeneratorService implements GeneratorService {
   // 局部的Generator不需要指定renderTargets
-  generate(data, config: EChartOption) {
+  generate(data: DataStructor, config: EChartOption) {
     config.title = {
       text: "这是新的title"
     };
@@ -27,12 +27,12 @@ class TitleTextEChartsGeneratorService implements GeneratorService {
   }
 }
 
-class TitleFontWeightEChartsGeneratorService implements GeneratorService {
+class TitleColorWeightEChartsGeneratorService implements GeneratorService {
   // 局部的Generator不需要指定renderTargets
-  generate(data, config: EChartOption) {
+  generate(data: DataStructor, config: EChartOption) {
     config.title = {
       textStyle: {
-        fontWeight: "bolder"
+        color: "red"
       }
     };
     return config;
@@ -61,7 +61,7 @@ const echartsLine = new Line(
 // 可以注册多个
 echartsLine.ctrl.registerGeneratorService(TitleTextEChartsGeneratorService);
 echartsLine.ctrl.registerGeneratorService(
-  TitleFontWeightEChartsGeneratorService
+  TitleColorWeightEChartsGeneratorService
 );
 
 echartsLine.render();
