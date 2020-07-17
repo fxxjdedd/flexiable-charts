@@ -8,10 +8,10 @@ import {
 } from "../service";
 
 // TODO: DI?
-export abstract class Registrable {
+export abstract class Registrable<T> {
   renderService?: RenderService;
   dataService?: DataService;
-  generatorServices: Array<GeneratorService> = [];
+  generatorServices: Array<GeneratorService<T>> = [];
 
   registerRenderService(Class: RenderServiceCtor) {
     // TODO: 实例化的时候需要注入一些方便用户使用的实例
@@ -21,7 +21,7 @@ export abstract class Registrable {
     // TODO: 实例化的时候需要注入一些方便用户使用的实例
     this.dataService = new Class();
   }
-  registerGeneratorService(Class: GeneratorServiceCtor) {
+  registerGeneratorService(Class: GeneratorServiceCtor<T>) {
     this.generatorServices.push(new Class());
   }
 
@@ -33,5 +33,5 @@ export abstract class Registrable {
     Registrable.prototype.dataService = new Class();
   }
 
-  static globalRegisterGeneratorService(Class: GeneratorServiceCtor) {}
+  static globalRegisterGeneratorService(Class: GeneratorServiceCtor<any>) {}
 }

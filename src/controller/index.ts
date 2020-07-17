@@ -34,7 +34,8 @@ function createGenerateResult(generators: GeneratorService[], data: DataStructor
   return assertUnreachable('理论上不会出现,')
 }
 
-export class Controller<T = unknown> extends Registrable implements Controllable {
+// 这个泛型的目的是，在用户使用特定的图表时，进行registerGeneratorService时，它的参数类型会被限定
+export class Controller<T> extends Registrable<T> implements Controllable {
   data: DataStructor;
   config: any;
   instance: any;

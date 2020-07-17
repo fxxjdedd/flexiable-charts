@@ -1,12 +1,14 @@
 import { BasePlot } from "../BasePlot";
 import { DataSourceOrExternalData } from "../../service/DataService";
-import { G2RenderService } from "../../service/official/G2RenderService";
-import { BIAssociativeDataService } from "../../service/official";
+import {
+  BIAssociativeDataService,
+  G2RenderService
+} from "../../service/core-service";
 import { Controller } from "../../controller";
 import { ChartCfg } from "@antv/g2/lib/interface";
-import { LineGenerator } from "./LineGenerator";
+import { LineGenerator, GenerateReturn } from "./LineGenerator";
 
-export class G2Line extends BasePlot {
+export class G2Line extends BasePlot<GenerateReturn> {
   constructor(
     el: any,
     dataSourceOrExternalData: DataSourceOrExternalData,
@@ -17,8 +19,12 @@ export class G2Line extends BasePlot {
       ...config
     };
 
-    const ctrl = new Controller(el, dataSourceOrExternalData, g2Config);
-    ctrl.registerGenerateService(LineGenerator);
+    const ctrl = new Controller<GenerateReturn>(
+      el,
+      dataSourceOrExternalData,
+      g2Config
+    );
+    ctrl.registerGeneratorService(LineGenerator);
     ctrl.registerRenderService(G2RenderService);
     ctrl.registerDataService(BIAssociativeDataService);
     super(ctrl);

@@ -1,8 +1,8 @@
 import { Controller, Controllable } from "../controller";
-export class BasePlot implements Controllable {
-  ctrl: Controller;
+export class BasePlot<T> implements Controllable {
+  ctrl: Controller<T>;
 
-  constructor(ctrl: Controller) {
+  constructor(ctrl: Controller<T>) {
     this.ctrl = ctrl;
     this.ctrl.instantiation();
   }
