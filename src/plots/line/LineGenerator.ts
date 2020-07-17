@@ -1,7 +1,11 @@
-import { GenerateService } from "../../service/GenerateService";
-import { DataStructor } from "../../service/DataService";
+import { GeneratorService, DataStructor } from "../../service";
 import { EChartOption } from "echarts";
-export class LineGenerator implements GenerateService {
+import { EChartsRenderService } from "../../service/core-service";
+
+export type GenerateReturn = EChartOption;
+
+export class LineGenerator implements GeneratorService<GenerateReturn> {
+  renderTargets = [EChartsRenderService];
   generate(data: DataStructor, config: EChartOption) {
     config.dataset = {
       dimensions: data.dimensions,

@@ -1,26 +1,33 @@
 import { GeneratorService, DataStructor } from "../../service";
-import Vue from "vue";
+import Vue, { VNode } from "vue";
 import { Table, TableColumn } from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
+import { VueRenderService } from "../../service/core-service";
 
-export class TableGenerator implements GeneratorService {
+const createElement = new Vue({}).$createElement;
+
+export type GenerateReturn = (lastVNode?: VNode) => VNode;
+
+export class TableGenerator implements GeneratorService<GenerateReturn> {
+  renderTargets = [VueRenderService];
   generate(data: DataStructor) {
-    const createElement = new Vue({}).$createElement;
-    return createElement(
-      Table,
-      {
-        props: {
-          data: data.source
-        }
-      },
-      data.dimensions.map(dim => {
-        return createElement(TableColumn, {
+    return () => {
+      return createElement(
+        Table,
+        {
           props: {
-            prop: dim,
-            label: dim
+            data: data.source
           }
-        });
-      })
-    );
+        },
+        data.dimensions.map(dim => {
+          return createElement(TableColumn, {
+            props: {
+              prop: dim,
+              label: dim
+            }
+          });
+        })
+      );
+    };
   }
 }

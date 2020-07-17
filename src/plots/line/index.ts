@@ -6,6 +6,8 @@ import {
   EChartOption
 } from "../../service/core-service";
 import "echarts/lib/chart/line";
+import "echarts/lib/component/title";
+import "echarts/lib/component/tooltip";
 import { DataSourceOrExternalData } from "../../service/DataService";
 import { LineGenerator, GenerateReturn } from "./LineGenerator";
 

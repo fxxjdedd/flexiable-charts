@@ -1,9 +1,13 @@
 import { ChartCfg } from "@antv/g2/lib/interface";
-import { GenerateService } from "../../service/GenerateService";
+import { GeneratorService } from "../../service/GeneratorService";
 import { DataStructor } from "../../service/DataService";
 import { Chart } from "@antv/g2";
+import { G2RenderService } from "../../service/core-service";
 
-export class LineGenerator implements GenerateService {
+export type GenerateReturn = (chart: Chart) => Chart;
+
+export class LineGenerator implements GeneratorService<GenerateReturn> {
+  renderTargets = [G2RenderService];
   generate(data: DataStructor, config: ChartCfg) {
     return (chart: Chart) => {
       chart.data(data.source);
@@ -79,7 +83,7 @@ export class LineGenerator implements GenerateService {
         }
       });
       chart.removeInteraction("legend-filter"); // 自定义图例，移除默认的分类图例筛选交互
-      chart.render();
+      return chart;
     };
   }
 }

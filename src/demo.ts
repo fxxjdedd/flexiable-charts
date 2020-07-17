@@ -1,4 +1,5 @@
 import { Line, G2Line, ReactTable, VueTable } from "./plots";
+import "./demos/registerGeneratorServiceDemo";
 
 // echarts
 const echartsLine = new Line(
@@ -53,16 +54,4 @@ const vueTable = new VueTable(
 );
 vueTable.render();
 
-// // custom render 伪代码
-// const myLine = new Line();
-// myLine.ctrl.registerDataService;
-// myLine.ctrl.registerGeneratorService;
-// myLine.ctrl.registerRenderService;
-
-// // custom chart 伪代码
-// class MyChart extends BasePlot {
-//   constructor() {
-//     // register service
-//   }
-// }
-// const myChart = new MyChart();
+// custom render 见 ./demos

@@ -9,8 +9,12 @@ import {GeneratorService} from '../service'
 import {all as deepmerge} from 'deepmerge'
 import { isDataSource, isAllObject, isAllFunction, assertUnreachable, assertExist, isAllElement } from '../util'
 
-function createGenerateResult(generators: GeneratorService[], data: DataStructor, config: any) {
-  const generates = generators.map(g => g.generate(data, config))
+function createGenerateResult(generators: GeneratorService[], globalGenerators: GeneratorService[], ctrl: Controller<unknown>) {
+  const { data, config, renderService } = ctrl
+  const validGlobalGenerators = globalGenerators.filter(g => (
+    !g.renderTargets || g.renderTargets.find(target => target === renderService!.constructor)
+  ))
+  const generates = generators.map(g => g.generate(data, deepmerge([{}, config]))).concat(validGlobalGenerators)
 
   if (isAllFunction(generates)) {
     return function(v: any, ...restArgs: any) {
@@ -58,11 +62,12 @@ export class Controller<T> extends Registrable<T> implements Controllable {
     this.instance = this.renderService?.mount(this.el, this.config);
   }
 
-  doRender(data: any, config: any) {
+  doRender() {
     assertExist(this.renderService, 'RenderService not registered!')
     assertExist(this.generatorServices, 'GeneratorService not registered!')
 
-    const generateResult = createGenerateResult(this.generatorServices, data, config)
+    const globalGeneratorServices = Registrable.generatorServices
+    const generateResult = createGenerateResult(this.generatorServices, globalGeneratorServices, this)
 
     this.renderService.render({
       instance: this.instance,
@@ -83,7 +88,7 @@ export class Controller<T> extends Registrable<T> implements Controllable {
   // g2-like apis
   async render() {
     this.data = await this.fetchData();
-    this.doRender(this.data, this.config);
+    this.doRender();
   }
   // updateConfig(config: any) {
   //   this.doRender(this.data, config)

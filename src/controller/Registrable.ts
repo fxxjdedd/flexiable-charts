@@ -15,11 +15,9 @@ export abstract class Registrable<T> {
   static generatorServices: Array<GeneratorService<unknown>> = [];
 
   registerRenderService(Class: RenderServiceCtor) {
-    // TODO: 实例化的时候需要注入一些方便用户使用的实例
     this.renderService = new Class();
   }
   registerDataService(Class: DataServiceCtor) {
-    // TODO: 实例化的时候需要注入一些方便用户使用的实例
     this.dataService = new Class();
   }
   registerGeneratorService(Class: GeneratorServiceCtor<T>) {
@@ -35,6 +33,7 @@ export abstract class Registrable<T> {
   }
 
   static globalRegisterGeneratorService(Class: GeneratorServiceCtor<unknown>) {
-    Registrable.prototype.generatorServices.push(new Class());
+    // NOTE: 这里不是在prototype上加
+    Registrable.generatorServices.push(new Class());
   }
 }
