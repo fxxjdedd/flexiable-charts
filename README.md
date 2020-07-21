@@ -14,7 +14,6 @@ Created with CodeSandbox
 
 ```ts
 import { Line, G2Line, ReactTable, VueTable } from "./plots";
-import "./demos/registerGeneratorServiceDemo";
 
 // echarts
 const echartsLine = new Line(
@@ -69,5 +68,5 @@ const vueTable = new VueTable(
 );
 vueTable.render();
 
-// custom render seed ./demos
+// 更多请看demos目录
 ```

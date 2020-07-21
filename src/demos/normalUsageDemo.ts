@@ -1,4 +1,4 @@
-import { Line, G2Line, ReactTable, VueTable } from "./plots";
+import { Line, G2Line, ReactTable, VueTable } from "../plots";
 
 // echarts
 const echartsLine = new Line(
@@ -52,5 +52,3 @@ const vueTable = new VueTable(
   {}
 );
 vueTable.render();
-
-// custom render seed ./demos
