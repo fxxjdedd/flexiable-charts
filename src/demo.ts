@@ -1,5 +1,4 @@
 import { Line, G2Line, ReactTable, VueTable } from "./plots";
-import "./demos/registerGeneratorServiceDemo";
 
 // echarts
 const echartsLine = new Line(
