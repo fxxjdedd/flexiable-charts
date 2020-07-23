@@ -1,17 +1,16 @@
 # flexiable-charts
 
-Created with CodeSandbox
+一个高度可扩展的charts库
 
 # todos
 
-- [x] 全局注册，局部注册，全局兼容性注册（既要大规模应用插件，也要保证兼容性）
-- [x] generator service 注册多个？
-- [x] generator service 注册校验？
-- [] generator 还是不够抽象
-- [] 写 react、vue 时支持 jsx
+- [x] 基础使用
+- [x] 全局、局部注册Generator
+- [x] 全局、局部注册Theme
+- [ ] 更多plots
 
 # usage
-
+基础用法：
 ```ts
 import { Line, G2Line, ReactTable, VueTable } from "./plots";
 
@@ -68,5 +67,114 @@ const vueTable = new VueTable(
 );
 vueTable.render();
 
-// 更多请看demos目录
+```
+
+自定义渲染：
+```ts
+import { Line } from "../plots/line";
+import { Registrable } from "../controller/Registrable";
+import { GeneratorService, DataStructor } from "../service";
+import { EChartOption, EChartsRenderService } from "../service/core-service";
+
+class globalEChartsGeneratorService implements GeneratorService {
+  // 这意味着，globalEChartsGeneratorService只对EChartsRenderService生效
+  renderTargets = [EChartsRenderService];
+  generate(data: DataStructor, config: EChartOption) {
+    config.title = {
+      textStyle: {
+        color: "red"
+      }
+    };
+    // TODO: 这里的返回值需要加上限定，ECharts类型的必须返回config
+    return config;
+  }
+}
+
+class TitleTextEChartsGeneratorService implements GeneratorService {
+  // 局部的Generator不需要指定renderTargets
+  generate(data: DataStructor, config: EChartOption) {
+    config.title = {
+      text: "这是新的title"
+    };
+    return config;
+  }
+}
+
+class TitleColorWeightEChartsGeneratorService implements GeneratorService {
+  // 局部的Generator不需要指定renderTargets
+  generate(data: DataStructor, config: EChartOption) {
+    config.title = {
+      textStyle: {
+        color: "red"
+      }
+    };
+    return config;
+  }
+}
+
+Registrable.globalRegisterGeneratorService(globalEChartsGeneratorService);
+// echarts
+const echartsLine = new Line(
+  document.getElementById("demo-1"),
+  {
+    id: 1,
+    from: ""
+  },
+  {
+    title: {
+      text: "原始的title"
+    },
+    legend: {},
+    tooltip: {},
+    xAxis: { type: "category" },
+    yAxis: {}
+  }
+);
+
+// 可以注册多个
+echartsLine.ctrl.registerGeneratorService(TitleTextEChartsGeneratorService);
+echartsLine.ctrl.registerGeneratorService(
+  TitleColorWeightEChartsGeneratorService
+);
+
+echartsLine.render();
+
+```
+
+自定义主题：
+
+```ts
+import { Line } from "../plots/line";
+import { Registrable } from "../controller/Registrable";
+import theme1 from "./theme1";
+import theme2 from "./theme2";
+
+// Theme: 全局注册theme
+// 可以注册多个，会选择“最后一个”注册的主题应用到所有图表
+Registrable.globalRegisterTheme("theme-test1", theme1);
+Registrable.globalRegisterTheme("theme-test2", theme2);
+const echartsLine = new Line(
+  document.getElementById("demo-2"),
+  {
+    id: 1,
+    from: ""
+  },
+  {
+    title: {
+      text: "测试主题"
+    },
+    legend: {},
+    tooltip: {},
+    xAxis: { type: "category" },
+    yAxis: {},
+    // Theme: 额外添加的EChartsOption属性，用来局部注册theme
+    // 可以传string | object
+    // 如果传string，则会去全局注册的theme里找，并局部使用；如果没找到，会给出warn
+    // 如果传object，则会局部注册一个theme，并局部使用
+    theme: "theme-test1"
+  }
+);
+
+echartsLine.render();
+
 ```
