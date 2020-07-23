@@ -13,7 +13,8 @@ export class VueRenderService implements RenderService {
       }
     };
   }
-  render({ instance, config }: any) {
-    instance.render(config);
+  render({ instance, generateResult }: any) {
+    const element = generateResult();
+    instance.render(element);
   }
 }

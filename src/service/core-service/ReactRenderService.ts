@@ -2,16 +2,16 @@ import { RenderService } from "..";
 import ReactDOM from "react-dom";
 export class ReactRenderService implements RenderService {
   mount(el: any) {
-    const dom = document.createElement("div");
-    el.appendChild(dom);
+    const container = document.createElement("div");
+    el.appendChild(container);
     return {
       render: (element: any) => {
-        ReactDOM.render(element, dom);
+        ReactDOM.render(element, container);
       }
     };
   }
-  render({ instance, config }: any) {
-    console.log(config);
-    instance.render(config);
+  render({ instance, generateResult }: any) {
+    const element = generateResult();
+    instance.render(element);
   }
 }

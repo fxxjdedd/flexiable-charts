@@ -10,11 +10,14 @@ import {all as deepmerge} from 'deepmerge'
 import { isDataSource, isAllObject, isAllFunction, assertUnreachable, assertExist, isAllElement } from '../util'
 
 function createGenerateResult(generators: GeneratorService[], globalGenerators: GeneratorService[], ctrl: Controller<unknown>) {
-  const { data, config, renderService } = ctrl
+  const { data, config, instance, renderService } = ctrl
   const validGlobalGenerators = globalGenerators.filter(g => (
     !g.renderTargets || g.renderTargets.find(target => target === renderService!.constructor)
   ))
-  const generates = generators.map(g => g.generate(data, deepmerge([{}, config]))).concat(validGlobalGenerators)
+  const generates = [
+    ...validGlobalGenerators.map(g => g.generate(data, deepmerge([{}, config]), instance)),
+    ...generators.map(g => g.generate(data, deepmerge([{}, config]), instance)),
+  ]
 
   if (isAllFunction(generates)) {
     return function(v: any, ...restArgs: any) {

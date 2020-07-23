@@ -54,11 +54,4 @@ export class BIAssociativeDataService implements DataService {
     });
   }
   async fetchDataByExternalData(externalData: ExternalData): Promise<any> {}
-  // async fetchData(dataSource?: DataSource) {
-  //   return new Promise(r => {
-  //     setTimeout(() => {
-  //       r();
-  //     }, 1000);
-  //   });
-  // }
 }

@@ -1,11 +1,10 @@
-export interface RenderProps<T = object, C = object, D = any> {
+export interface RenderProps<T = object, C = object> {
   instance: T;
-  config: C;
-  data: D;
+  generateResult: C;
 }
 
 export interface RenderService {
-  mount(el: any): any;
+  mount(el: HTMLDivElement, config: any): object;
   render(renderProps: RenderProps): any;
 }
 

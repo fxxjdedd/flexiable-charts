@@ -10,7 +10,8 @@ class globalEChartsGeneratorService implements GeneratorService {
     config.title = {
       textStyle: {
         color: "red"
-      }
+      },
+      subtext: "123"
     };
     // TODO: 这里的返回值需要加上限定，ECharts类型的必须返回config
     return config;
@@ -32,13 +33,14 @@ class TitleColorWeightEChartsGeneratorService implements GeneratorService {
   generate(data: DataStructor, config: EChartOption) {
     config.title = {
       textStyle: {
-        color: "red"
+        color: "blue"
       }
     };
     return config;
   }
 }
 
+// Theme: 全局注册theme
 Registrable.globalRegisterGeneratorService(globalEChartsGeneratorService);
 // echarts
 const echartsLine = new Line(

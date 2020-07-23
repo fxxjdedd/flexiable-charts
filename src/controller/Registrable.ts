@@ -6,6 +6,7 @@ import {
   RenderServiceCtor,
   GeneratorServiceCtor
 } from "../service";
+import echarts from "echarts";
 
 // TODO: DI?
 export abstract class Registrable<T> {
@@ -13,6 +14,7 @@ export abstract class Registrable<T> {
   dataService?: DataService;
   generatorServices: Array<GeneratorService<T>> = [];
   static generatorServices: Array<GeneratorService<unknown>> = [];
+  static themes: Map<string, object> = new Map();
 
   registerRenderService(Class: RenderServiceCtor) {
     this.renderService = new Class();
@@ -35,5 +37,9 @@ export abstract class Registrable<T> {
   static globalRegisterGeneratorService(Class: GeneratorServiceCtor<unknown>) {
     // NOTE: 这里不是在prototype上加
     Registrable.generatorServices.push(new Class());
+  }
+  static globalRegisterTheme(name: string, theme: object) {
+    echarts.registerTheme(name, theme);
+    Registrable.themes.set(name, theme);
   }
 }

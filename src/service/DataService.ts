@@ -1,5 +1,6 @@
 export interface DataStructor {
-  source: Array<Array<any>>;
+  dimensions: string[];
+  source: Array<object>;
 }
 export interface DataSource {
   id: number;

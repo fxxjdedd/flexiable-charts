@@ -16,8 +16,8 @@ export class G2RenderService implements RenderService {
     });
   }
 
-  render({ instance, config }: G2RenderProps) {
-    config(instance);
+  render({ instance, generateResult }: G2RenderProps) {
+    generateResult(instance);
     instance.render();
   }
 }
